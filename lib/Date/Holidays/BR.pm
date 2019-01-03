@@ -148,7 +148,9 @@ sub holidays {
          15 => 'Proclamação da República',
        },
       12 => {
+         24 => 'Véspera de Natal',
          25 => 'Natal',
+         31 => 'Véspera de Ano Novo',
        },
   );
 
