@@ -130,6 +130,7 @@ sub holidays {
   my %holidays = (
        1 => {
           1 => 'Confraternização Universal',
+          25 => 'Aniversário de São Paulo',
        },
        4 => {
          21 => 'Tiradentes',
