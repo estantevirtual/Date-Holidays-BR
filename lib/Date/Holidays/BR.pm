@@ -132,6 +132,11 @@ sub holidays {
           1 => 'Confraternização Universal',
           25 => 'Aniversário de São Paulo',
        },
+       3 => {
+          4 => 'Carnaval',
+          5 => 'Carnaval',
+          6 => 'Quarta-feira de Cinzas',
+       },
        4 => {
          21 => 'Tiradentes',
        },
