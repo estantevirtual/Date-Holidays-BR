@@ -90,8 +90,8 @@ sub is_br_holiday {
   defined $day   || return undef;
 
   my $holidays = $self->holidays($year);
-  if (defined $holidays->{$month} and defined $holidays->{$month}{$day}) {
-    return $holidays->{$month}{$day};
+  if (defined $holidays{$year} and defined $holidays->{$year}{$month} and defined $holidays->{$year}{$month}{$day}) {
+    return $holidays->{$year}{$month}{$day};
   }
   else {
     return undef;
