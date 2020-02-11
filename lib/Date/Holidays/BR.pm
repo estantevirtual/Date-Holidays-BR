@@ -85,18 +85,22 @@ semicolon.
 sub is_br_holiday {
   my $self = shift;
   my ($year, $month, $day) = @_;
+
   defined $year  || return undef;
   defined $month || return undef;
   defined $day   || return undef;
 
   my $holidays = $self->holidays($year);
-  if (defined $holidays{$year} and defined $holidays->{$year}{$month} and defined $holidays->{$year}{$month}{$day}) {
-    return $holidays->{$year}{$month}{$day};
+  my $year_holidays = $self->year_holidays($year);
+
+  if (defined $holidays->{$month} and defined $holidays->{$month}{$day}) {
+    return $holidays->{$month}{$day};
   }
-  else {
+  elsif (defined $year_holidays->{$month} and defined $year_holidays->{$month}{$day}) {
+    return $year_holidays->{$month}{$day};
+  } else {
     return undef;
   }
-
 }
 
 =head2 holidays
@@ -127,9 +131,7 @@ sub holidays {
   my $year = shift;
   defined $year || return undef;
 
-  my %holidays = ( 
-    { 
-      {
+  my %holidays = (
        1 => {
           1 => 'Confraternização Universal',
           25 => 'Aniversário de São Paulo',
@@ -156,8 +158,14 @@ sub holidays {
          25 => 'Natal',
          31 => 'Véspera de Ano Novo',
        },
-    },
-    {
+  );
+
+  sub year_holidays {
+    my $self = shift;
+    my $year = shift;
+    defined $year || return undef;
+
+    my %year_holidays = (
       2020 => {
         2 => {
           24 => 'Carnaval',
@@ -224,7 +232,7 @@ sub holidays {
         10 => {
           21 => 'Dia do Comércio'
         },
-      }
+      },
       2025 => {
         3 => {
           3 => 'Carnaval',
@@ -237,7 +245,7 @@ sub holidays {
         10 => {
           20 => 'Dia do Comércio'
         },
-      }
+      },
       2026 => {
         2 => {
           16 => 'Carnaval',
@@ -250,7 +258,7 @@ sub holidays {
         10 => {
           19 => 'Dia do Comércio'
         },
-      }
+      },
       2027 => {
         2 => {
           8 => 'Carnaval',
@@ -263,7 +271,7 @@ sub holidays {
         10 => {
           18 => 'Dia do Comércio'
         },
-      }
+      },
       2028 => {
         2 => {
           28 => 'Carnaval',
@@ -278,7 +286,7 @@ sub holidays {
         10 => {
           16 => 'Dia do Comércio'
         },
-      }
+      },
       2029 => {
         2 => {
           12 => 'Carnaval',
@@ -291,7 +299,7 @@ sub holidays {
         10 => {
           15 => 'Dia do Comércio'
         },
-      }
+      },
       2030 => {
         3 => {
           4 => 'Carnaval',
@@ -305,9 +313,8 @@ sub holidays {
           21 => 'Dia do Comércio'
         },
       }
-    }
+    )
   }
-  );
 
   my ($emonth, $eday) = gregorian_easter($year);
   $holidays{$emonth}{$eday} = 'Páscoa';
