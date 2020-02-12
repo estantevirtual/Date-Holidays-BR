@@ -93,14 +93,7 @@ sub is_br_holiday {
   my $holidays = $self->holidays($year);
   my $year_holidays = $self->year_holidays($year);
 
-  if (defined $holidays->{$month} and defined $holidays->{$month}{$day}) {
-    return $holidays->{$month}{$day};
-  }
-  elsif (defined $year_holidays->{$year} and defined $year_holidays->{$year}{$month} and defined $year_holidays->{$year}{$month}{$day}) {
-    return $year_holidays->{$year}{$month}{$day};
-  } else {
-    return undef;
-  }
+  return $holidays->{$month}{$day} || $year_holidays->{$year}{$month}{$day} || undef;
 }
 
 =head2 holidays
