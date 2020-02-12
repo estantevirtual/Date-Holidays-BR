@@ -160,12 +160,31 @@ sub holidays {
        },
   );
 
-  sub year_holidays {
+  my ($emonth, $eday) = gregorian_easter($year);
+  $holidays{$emonth}{$eday} = 'Páscoa';
+
+  my $dt = DateTime->new( year => $year, month => $emonth, day => $eday);
+
+  my $carnival = [ $dt->clone()->add( days => -48), $dt->clone()->add( days => -47), $dt->clone()->add( days => -46) ];
+  
+  $holidays{$carnival->[0]->month}{$carnival->[0]->day} = "Carnaval"; 
+  $holidays{$carnival->[1]->month}{$carnival->[1]->day} = "Carnaval"; 
+  $holidays{$carnival->[2]->month}{$carnival->[2]->day} = "Carnaval";
+
+  my $jd = julian_day($year, $emonth, $eday);
+
+  my (undef, $smonth, $sday) = inverse_julian_day($jd - 2);
+  $holidays{$smonth}{$sday} = 'Sexta-feira da Paixão';
+
+  return \%holidays;
+}
+
+sub year_holidays {
     my $self = shift;
     my $year = shift;
     defined $year || return undef;
 
-    my %year_holidays = (
+    my % year_holidays= (
       2020 => {
         2 => {
           24 => 'Carnaval',
@@ -313,27 +332,9 @@ sub holidays {
           21 => 'Dia do Comércio'
         },
       }
-    )
+    );
+  return \%year_holidays;
   }
-
-  my ($emonth, $eday) = gregorian_easter($year);
-  $holidays{$emonth}{$eday} = 'Páscoa';
-
-  my $dt = DateTime->new( year => $year, month => $emonth, day => $eday);
-
-  my $carnival = [ $dt->clone()->add( days => -48), $dt->clone()->add( days => -47), $dt->clone()->add( days => -46) ];
-  
-  $holidays{$carnival->[0]->month}{$carnival->[0]->day} = "Carnaval"; 
-  $holidays{$carnival->[1]->month}{$carnival->[1]->day} = "Carnaval"; 
-  $holidays{$carnival->[2]->month}{$carnival->[2]->day} = "Carnaval";
-
-  my $jd = julian_day($year, $emonth, $eday);
-
-  my (undef, $smonth, $sday) = inverse_julian_day($jd - 2);
-  $holidays{$smonth}{$sday} = 'Sexta-feira da Paixão';
-
-  return \%holidays;
-}
 
 42;
 __END__
