@@ -96,8 +96,8 @@ sub is_br_holiday {
   if (defined $holidays->{$month} and defined $holidays->{$month}{$day}) {
     return $holidays->{$month}{$day};
   }
-  elsif (defined $year_holidays->{$month} and defined $year_holidays->{$month}{$day}) {
-    return $year_holidays->{$month}{$day};
+  elsif (defined $year_holidays->{$year} and defined $year_holidays->{$year}{$month} and defined $year_holidays->{$year}{$month}{$day}) {
+    return $year_holidays->{$year}{$month}{$day};
   } else {
     return undef;
   }
