@@ -85,18 +85,15 @@ semicolon.
 sub is_br_holiday {
   my $self = shift;
   my ($year, $month, $day) = @_;
+
   defined $year  || return undef;
   defined $month || return undef;
   defined $day   || return undef;
 
   my $holidays = $self->holidays($year);
-  if (defined $holidays->{$month} and defined $holidays->{$month}{$day}) {
-    return $holidays->{$month}{$day};
-  }
-  else {
-    return undef;
-  }
+  my $year_holidays = $self->year_holidays($year);
 
+  return $holidays->{$month}{$day} || $year_holidays->{$year}{$month}{$day} || undef;
 }
 
 =head2 holidays
@@ -132,11 +129,6 @@ sub holidays {
           1 => 'Confraternização Universal',
           25 => 'Aniversário de São Paulo',
        },
-       3 => {
-          4 => 'Carnaval',
-          5 => 'Carnaval',
-          6 => 'Quarta-feira de Cinzas',
-       },
        4 => {
          21 => 'Tiradentes',
        },
@@ -152,6 +144,7 @@ sub holidays {
       11 => {
           2 => 'Dia de Finados',
          15 => 'Proclamação da República',
+         20 => 'Consciência Negra'
        },
       12 => {
          24 => 'Véspera de Natal',
@@ -178,6 +171,163 @@ sub holidays {
 
   return \%holidays;
 }
+
+sub year_holidays {
+    my $self = shift;
+    my $year = shift;
+    defined $year || return undef;
+
+    my % year_holidays= (
+      2020 => {
+        2 => {
+          24 => 'Carnaval',
+          25 => 'Carnaval',
+          26 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          10 => 'Paixão de Cristo'
+        },
+        10 => {
+          19 => 'Dia do Comércio'
+        },
+      },
+      2021 => {
+        2 => {
+          15 => 'Carnaval',
+          16 => 'Carnaval',
+          17 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          02 => 'Paixão de Cristo'
+        },
+        10 => {
+          18 => 'Dia do Comércio'
+        },
+      },
+      2022 => {
+        2 => {
+          28 => 'Carnaval',
+        },
+        3 => {
+          1 => 'Carnaval',
+          2 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          15 => 'Paixão de Cristo'
+        },
+        10 => {
+          17 => 'Dia do Comércio'
+        },
+      },
+      2023 => {
+        2 => {
+          20 => 'Carnaval',
+          21 => 'Carnaval',
+          22 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          7 => 'Paixão de Cristo'
+        },
+        10 => {
+          16 => 'Dia do Comércio'
+        }
+      },
+      2024 => {
+        2 => {
+          12 => 'Carnaval',
+          13 => 'Carnaval',
+          14 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          29 => 'Paixão de Cristo'
+        },
+        10 => {
+          21 => 'Dia do Comércio'
+        },
+      },
+      2025 => {
+        3 => {
+          3 => 'Carnaval',
+          4 => 'Carnaval',
+          5 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          18 => 'Paixão de Cristo'
+        },
+        10 => {
+          20 => 'Dia do Comércio'
+        },
+      },
+      2026 => {
+        2 => {
+          16 => 'Carnaval',
+          17 => 'Carnaval',
+          18 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          3 => 'Paixão de Cristo'
+        },
+        10 => {
+          19 => 'Dia do Comércio'
+        },
+      },
+      2027 => {
+        2 => {
+          8 => 'Carnaval',
+          9 => 'Carnaval',
+          10 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          26 => 'Paixão de Cristo'
+        },
+        10 => {
+          18 => 'Dia do Comércio'
+        },
+      },
+      2028 => {
+        2 => {
+          28 => 'Carnaval',
+          29 => 'Carnaval',
+        },
+        3 => {
+          01 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          14 => 'Paixão de Cristo'
+        },
+        10 => {
+          16 => 'Dia do Comércio'
+        },
+      },
+      2029 => {
+        2 => {
+          12 => 'Carnaval',
+          13 => 'Carnaval',
+          14 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          30 => 'Paixão de Cristo'
+        },
+        10 => {
+          15 => 'Dia do Comércio'
+        },
+      },
+      2030 => {
+        3 => {
+          4 => 'Carnaval',
+          5 => 'Carnaval',
+          6 => 'Quarta-feira de Cinzas',
+        },
+        4 => {
+          19 => 'Paixão de Cristo'
+        },
+        10 => {
+          21 => 'Dia do Comércio'
+        },
+      }
+    );
+  return \%year_holidays;
+  }
 
 42;
 __END__
