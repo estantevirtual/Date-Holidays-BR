@@ -185,10 +185,14 @@ sub year_holidays {
           26 => 'Quarta-feira de Cinzas',
         },
         4 => {
-          10 => 'Paixão de Cristo'
+          10 => 'Paixão de Cristo',
+        },
+        5 => {
+          20 => 'Dia da consciência negra',
+          21 => 'Nossa Senhora Aparecida',
         },
         10 => {
-          19 => 'Dia do Comércio'
+          19 => 'Dia do Comércio',
         },
       },
       2021 => {
